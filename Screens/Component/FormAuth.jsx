@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   ImageBackground,
   KeyboardAvoidingView,
@@ -10,9 +11,13 @@ import {
 } from "react-native";
 
 import image from "../../assets/images/photobg.jpg";
+import { Keyboard } from "react-native";
+import { TouchableWithoutFeedback } from "react-native";
 
 export default function FormAuth({ title, login, btn1, btn2 }) {
   // console.log(Platform.OS);
+  const [isKeyboard, setIsKeyboard] = useState(false);
+
   return (
     <ImageBackground
       source={image}
@@ -20,53 +25,72 @@ export default function FormAuth({ title, login, btn1, btn2 }) {
       style={styles.image}
     >
       <KeyboardAvoidingView
-        style={{ width: "100%", marginHorizontal: 16 }}
+        style={{
+          width: "100%",
+          marginHorizontal: 16,
+          // onClose={() => }
+        }}
       >
-        <View style={styles.wrap}>
-          {login && (
-            <>
-              <View style={styles.avatar}></View>
-              <View style={{ height: 60 }} />
-            </>
-          )}
-          <Text style={styles.title}>{title}</Text>
-          <View style={{ width: "100%" }}>
+        <TouchableWithoutFeedback
+          onPress={Keyboard.dismiss}
+          // onFocus={() => setIsKeyboard(false)}
+        >
+          <View
+            style={{
+              ...styles.wrap,
+              paddingBottom: isKeyboard ? 16 : 0,
+            }}
+            // onPress={}
+          >
             {login && (
+              <>
+                <View style={styles.avatar}></View>
+                <View style={{ height: 60 }} />
+              </>
+            )}
+            <Text style={styles.title}>{title}</Text>
+            <View
+              style={{ width: "100%" }}
+              onFocus={() => setIsKeyboard(true)}
+              onBlur={() => setIsKeyboard(false)}
+            >
+              {login && (
+                <TextInput
+                  style={styles.input}
+                  // onChangeText={onChangeNumber}
+                  // value={number}
+                  placeholder="Логін"
+                />
+              )}
               <TextInput
                 style={styles.input}
                 // onChangeText={onChangeNumber}
                 // value={number}
-                placeholder="Логін"
-                // keyboardType="numeric"
+                placeholder="Адреса електронної пошти"
+                keyboardType="email-address"
               />
-            )}
-            <TextInput
-              style={styles.input}
-              // onChangeText={onChangeNumber}
-              // value={number}
-              placeholder="Адреса електронної пошти"
-              keyboardType="email-address"
-            />
-            <TextInput
-              style={styles.input}
-              // onChangeText={onChangeNumber}
-              // value={number}
-              placeholder="Пароль"
-              secureTextEntry={true}
-              // keyboardType="numeric"
-            />
+              <TextInput
+                style={styles.input}
+                // onChangeText={onChangeNumber}
+                // value={number}
+                placeholder="Пароль"
+                secureTextEntry={true}
+              />
+            </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-      <View style={{ width: "100%", backgroundColor: "#ffffff" }}>
-        <TouchableOpacity activeOpacity={0.8} style={styles.btnReg}>
-          <Text style={styles.btnTitle}>{btn1}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8}>
-          <Text style={styles.btnAcount}>{btn2}</Text>
-        </TouchableOpacity>
-        {!login && <View style={{ height: 66 }} />}
-      </View>
+      {!isKeyboard && (
+        <View style={{ width: "100%", backgroundColor: "#ffffff" }}>
+          <TouchableOpacity activeOpacity={0.8} style={styles.btnReg}>
+            <Text style={styles.btnTitle}>{btn1}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.8}>
+            <Text style={styles.btnAcount}>{btn2}</Text>
+          </TouchableOpacity>
+          {!login && <View style={{ height: 66 }} />}
+        </View>
+      )}
     </ImageBackground>
   );
 }
