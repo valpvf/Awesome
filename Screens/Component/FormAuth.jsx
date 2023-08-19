@@ -1,22 +1,27 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   ImageBackground,
   KeyboardAvoidingView,
-  // Platform,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
+  Keyboard,
 } from "react-native";
 
 import image from "../../assets/images/photobg.jpg";
-import { Keyboard } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
 
 export default function FormAuth({ title, login, btn1, btn2 }) {
-  // console.log(Platform.OS);
+  const initialState = {
+    email: "",
+    password: "",
+  };
+  login ? (initialState.name = "") : null;
   const [isKeyboard, setIsKeyboard] = useState(false);
+  const [state, setState] = useState(initialState);
 
   return (
     <ImageBackground
@@ -24,23 +29,19 @@ export default function FormAuth({ title, login, btn1, btn2 }) {
       resizeMode="cover"
       style={styles.image}
     >
-      <KeyboardAvoidingView
-        style={{
-          width: "100%",
-          marginHorizontal: 16,
-          // onClose={() => }
-        }}
-      >
-        <TouchableWithoutFeedback
-          onPress={Keyboard.dismiss}
-          // onFocus={() => setIsKeyboard(false)}
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView
+          // behavior={Platform.OS == "ios" ? "padding" : "height"}
+          style={{
+            width: "100%",
+            marginHorizontal: 16,
+          }}
         >
           <View
             style={{
               ...styles.wrap,
               paddingBottom: isKeyboard ? 16 : 0,
             }}
-            // onPress={}
           >
             {login && (
               <>
@@ -57,32 +58,45 @@ export default function FormAuth({ title, login, btn1, btn2 }) {
               {login && (
                 <TextInput
                   style={styles.input}
-                  // onChangeText={onChangeNumber}
-                  // value={number}
                   placeholder="Логін"
+                  value={state.name}
+                  onChangeText={(value) =>
+                    setState((prev) => ({ ...prev, name: value }))
+                  }
                 />
               )}
               <TextInput
                 style={styles.input}
-                // onChangeText={onChangeNumber}
-                // value={number}
                 placeholder="Адреса електронної пошти"
                 keyboardType="email-address"
+                value={state.email}
+                onChangeText={(value) =>
+                  setState((prev) => ({ ...prev, email: value }))
+                }
               />
               <TextInput
                 style={styles.input}
-                // onChangeText={onChangeNumber}
-                // value={number}
                 placeholder="Пароль"
                 secureTextEntry={true}
+                value={state.password}
+                onChangeText={(value) =>
+                  setState((prev) => ({ ...prev, password: value }))
+                }
               />
             </View>
           </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
       {!isKeyboard && (
         <View style={{ width: "100%", backgroundColor: "#ffffff" }}>
-          <TouchableOpacity activeOpacity={0.8} style={styles.btnReg}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.btnReg}
+            onPress={() => {
+              console.log(state);
+              setState(initialState);
+            }}
+          >
             <Text style={styles.btnTitle}>{btn1}</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.8}>
