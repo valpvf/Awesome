@@ -1,15 +1,15 @@
 import { React } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const ProfileScreen = () => {
+const PostsScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>ProfileScreen</Text>
+      <Text>PostsScreen</Text>
     </View>
   );
 };
 
-export default ProfileScreen;
+export default PostsScreen;
 
 const styles = StyleSheet.create({
   container: {

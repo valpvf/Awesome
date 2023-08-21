@@ -1,16 +1,12 @@
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useFonts } from "expo-font";
-// import { StatusBar } from "expo-status-bar";
-import RegistrationScreen from "./Screens/Auth/RegistrationScreen";
-import LoginScreen from "./Screens/Auth/LoginScreen";
+import { useRoute } from "./router";
 
-const AuthStack = createStackNavigator();
-const MainTab = createBottomTabNavigator();
+// import { StatusBar } from "expo-status-bar";
 
 export default function App() {
+  const routing = useRoute(null);
   const [fontsLoaded] = useFonts({
     Roboto: require("./assets/fonts/Roboto-Regular.otf"),
     RobotoMedium: require("./assets/fonts/Roboto-Medium.otf"),
@@ -23,18 +19,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <AuthStack.Navigator>
-        <AuthStack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ headerShown: false }}
-        />
-        <AuthStack.Screen
-          name="Register"
-          component={RegistrationScreen}
-          options={{ headerShown: false }}
-        />
-      </AuthStack.Navigator>
+      {routing}
       {/* <StatusBar style="auto" /> */}
     </NavigationContainer>
   );
