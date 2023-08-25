@@ -3,10 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { useRoute } from "./router";
 
-// import { StatusBar } from "expo-status-bar";
-
 export default function App() {
-  const routing = useRoute(null);
+  const routing = useRoute({ a: 123 });
   const [fontsLoaded] = useFonts({
     Roboto: require("./assets/fonts/Roboto-Regular.otf"),
     RobotoMedium: require("./assets/fonts/Roboto-Medium.otf"),
@@ -17,10 +15,5 @@ export default function App() {
     return null;
   }
 
-  return (
-    <NavigationContainer>
-      {routing}
-      {/* <StatusBar style="auto" /> */}
-    </NavigationContainer>
-  );
+  return <NavigationContainer>{routing}</NavigationContainer>;
 }

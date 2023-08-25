@@ -1,4 +1,7 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  Header,
+  createStackNavigator,
+} from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { getHeaderTitle } from "@react-navigation/elements";
 
@@ -10,12 +13,19 @@ import CreatePostsScreen from "./Screens/Main/CreatePostsScreen";
 
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import { Button, Text } from "react-native";
+import { useState } from "react";
 
 const AuthStack = createStackNavigator();
 const MainTab = createBottomTabNavigator();
 
 export const useRoute = (isAuth) => {
-  if (isAuth) {
+  const [auth, setAuth] = useState(isAuth);
+  function handleOut() {
+    setAuth((prev) => (prev = null));
+    console.log("func", auth);
+  }
+  console.log("isAuth", auth);
+  if (!Boolean(auth)) {
     return (
       <AuthStack.Navigator>
         <AuthStack.Screen
@@ -41,7 +51,6 @@ export const useRoute = (isAuth) => {
           borderTopWidth: 0.5,
           backgroundColor: "#ffffff",
         },
-        // title: { marginHorizontal: "auto" },
       }}
     >
       <MainTab.Screen
@@ -51,55 +60,15 @@ export const useRoute = (isAuth) => {
           tabBarIcon: ({ focused, color, size }) => (
             <AntDesign name="appstore-o" size={size} color={color} />
           ),
-          header: ({ navigation, route, options }) => {
-            const title = getHeaderTitle(options, route.name);
-
-            return (
-              <>
-                <Text value="" style={options.headerStyle}>
-                  Публікації
-                </Text>
-                <Ionicons
-                  style={{ position: "absolute", top: 54, right: 10 }}
-                  name="log-out-outline"
-                  size={24}
-                  color="black"
-                />
-                {/*  */}
-              </>
-            );
-          },
-          // headerStyle: {
-          //   height: 54, // Specify the height of your custom header
-          // },
-          headerStyle: {
-            // left: 150,
-            flexDirection: "row",
-            // width: 150,
-            justifyContent: "space-between",
-            marginRight: 0,
-            height: 84,
-            backgroundColor: "#ffffff",
-          },
-          // headerRight: () => (
-          //   <Button
-          //     tabBarStyle={{
-          //       flexDirection: "row",
-          //       width: 50,
-          //       jastifyContent: "space-between",
-          //       marginRight: 50,
-          //     }}
-          //     type="clear"
-          //     title=""
-          //     icon={
-          //       <Ionicons
-          //         name="log-out-outline"
-          //         size={24}
-          //         color="black"
-          //       />
-          //     }
-          //   />
-          // ),
+          headerRight: () => (
+            <Ionicons
+              style={{ right: 10 }}
+              name="log-out-outline"
+              size={24}
+              color="black"
+              onPress={handleOut}
+            />
+          ),
         }}
       />
       <MainTab.Screen
@@ -114,12 +83,8 @@ export const useRoute = (isAuth) => {
             backgroundColor: "#FF6C00",
             maxWidth: 70,
             maxHeight: 40,
-            // marginTop: 9,
           },
         }}
-        // screenOptions={{
-        //   tabBarStyle: { borderRadius: 20 },
-        // }}
       />
       <MainTab.Screen
         name="Профііль"

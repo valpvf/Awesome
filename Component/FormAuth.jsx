@@ -10,9 +10,10 @@ import {
   View,
   Keyboard,
 } from "react-native";
+import { TouchableWithoutFeedback } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 import image from "./../assets/images/photobg.jpg";
-import { TouchableWithoutFeedback } from "react-native";
 
 export default function FormAuth({
   title,
@@ -33,100 +34,107 @@ export default function FormAuth({
   const [state, setState] = useState(initialState);
 
   return (
-    <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ImageBackground
-          source={image}
-          resizeMode="cover"
-          style={styles.image}
-        >
-          <KeyboardAvoidingView
-            // behavior={Platform.OS == "ios" ? "padding" : "height"}
-            style={{
-              width: "100%",
-              marginHorizontal: 16,
-            }}
+    <>
+      <View style={styles.container}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <ImageBackground
+            source={image}
+            resizeMode="cover"
+            style={styles.image}
           >
-            <View
+            <KeyboardAvoidingView
+              // behavior={Platform.OS == "ios" ? "padding" : "height"}
               style={{
-                ...styles.wrap,
-                paddingBottom: isKeyboard ? 16 : 0,
+                width: "100%",
+                marginHorizontal: 16,
               }}
             >
-              {login && (
-                <>
-                  <View style={styles.avatar}></View>
-                  <View style={{ height: 60 }} />
-                </>
-              )}
-              <Text style={styles.title}>{title}</Text>
               <View
-                style={{ width: "100%" }}
-                onFocus={() => setIsKeyboard(true)}
-                onBlur={() => setIsKeyboard(false)}
-              >
-                {login && (
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Логін"
-                    value={state.name}
-                    onChangeText={(value) =>
-                      setState((prev) => ({ ...prev, name: value }))
-                    }
-                  />
-                )}
-                <TextInput
-                  style={styles.input}
-                  placeholder="Адреса електронної пошти"
-                  keyboardType="email-address"
-                  value={state.email}
-                  onChangeText={(value) =>
-                    setState((prev) => ({ ...prev, email: value }))
-                  }
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Пароль"
-                  secureTextEntry={true}
-                  value={state.password}
-                  onChangeText={(value) =>
-                    setState((prev) => ({ ...prev, password: value }))
-                  }
-                />
-              </View>
-            </View>
-          </KeyboardAvoidingView>
-          {!isKeyboard && (
-            <View
-              style={{ width: "100%", backgroundColor: "#ffffff" }}
-            >
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.btnReg}
-                onPress={() => {
-                  console.log(state);
-                  setState(initialState);
+                style={{
+                  ...styles.wrap,
+                  paddingBottom: isKeyboard ? 16 : 0,
                 }}
               >
-                <Text style={styles.btnTitle}>{btn1}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => navigation.navigate(navTo)}
+                {login && (
+                  <>
+                    <View style={styles.avatar}></View>
+                    <View style={{ height: 60 }} />
+                  </>
+                )}
+                <Text style={styles.title}>{title}</Text>
+                <View
+                  style={{ width: "100%" }}
+                  onFocus={() => setIsKeyboard(true)}
+                  onBlur={() => setIsKeyboard(false)}
+                  // onPress={() => setIsKeyboard(false)}
+                >
+                  {login && (
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Логін"
+                      value={state.name}
+                      onChangeText={(value) =>
+                        setState((prev) => ({ ...prev, name: value }))
+                      }
+                    />
+                  )}
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Адреса електронної пошти"
+                    keyboardType="email-address"
+                    value={state.email}
+                    onChangeText={(value) =>
+                      setState((prev) => ({ ...prev, email: value }))
+                    }
+                  />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Пароль"
+                    secureTextEntry={true}
+                    value={state.password}
+                    onChangeText={(value) =>
+                      setState((prev) => ({
+                        ...prev,
+                        password: value,
+                      }))
+                    }
+                  />
+                </View>
+              </View>
+            </KeyboardAvoidingView>
+            {!isKeyboard && (
+              <View
+                style={{ width: "100%", backgroundColor: "#ffffff" }}
               >
-                <Text style={styles.btnAcount}>
-                  {btn2}
-                  <Text style={{ textDecorationLine: "underline" }}>
-                    {btn3}
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.btnReg}
+                  onPress={() => {
+                    console.log(state);
+                    setState(initialState);
+                  }}
+                >
+                  <Text style={styles.btnTitle}>{btn1}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => navigation.navigate(navTo)}
+                >
+                  <Text style={styles.btnAcount}>
+                    {btn2}
+                    <Text style={{ textDecorationLine: "underline" }}>
+                      {btn3}
+                    </Text>
                   </Text>
-                </Text>
-              </TouchableOpacity>
-              {!login && <View style={{ height: 66 }} />}
-            </View>
-          )}
-        </ImageBackground>
-      </TouchableWithoutFeedback>
-    </View>
+                </TouchableOpacity>
+                {!login && <View style={{ height: 66 }} />}
+              </View>
+            )}
+          </ImageBackground>
+        </TouchableWithoutFeedback>
+      </View>
+      <StatusBar style="auto" />
+    </>
   );
 }
 
