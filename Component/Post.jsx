@@ -9,7 +9,12 @@ import {
 import { Feather } from "@expo/vector-icons";
 import image from "./../assets/images/image.jpg";
 
-export default function Post() {
+export default function Post({
+  image,
+  title,
+  locationPhoto,
+  navigation,
+}) {
   return (
     <View style={styles.wrapper}>
       <Image
@@ -17,7 +22,7 @@ export default function Post() {
         resizeMode="cover"
         style={styles.image}
       ></Image>
-      <Text style={styles.title}>Ліс</Text>
+      <Text style={styles.title}>{title}</Text>
       <View style={styles.inner}>
         <View style={styles.subinner}>
           <View style={styles.box}>
@@ -35,18 +40,28 @@ export default function Post() {
           </View>
         </View>
         <View style={[styles.box, { justifyContent: "flex-end" }]}>
-          <Feather name="map-pin" size={24} color="#BDBDBD" />
           <TouchableOpacity
             activeOpacity={0.8}
-            // onPress={() => navigation.navigate(navTo)}
+            onPress={() =>
+              navigation.navigate("Публікації", {
+                screen: "MapScreen",
+              })
+            }
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              gap: 8,
+            }}
           >
+            <Feather name="map-pin" size={24} color="#BDBDBD" />
             <Text
               style={[
                 styles.text,
                 { textDecorationLine: "underline" },
               ]}
             >
-              Ukraine
+              {locationPhoto}
             </Text>
           </TouchableOpacity>
         </View>
@@ -65,6 +80,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
+    height: 240,
     borderRadius: 8,
   },
   title: {

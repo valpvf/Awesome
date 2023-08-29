@@ -14,6 +14,7 @@ import CreatePostsScreen from "./Screens/Main/CreatePostsScreen";
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import { Button, Text } from "react-native";
 import { useState } from "react";
+import DefaultPostsScreen from "./Screens/NestedScreens/DefaultPostsScreen";
 
 const AuthStack = createStackNavigator();
 const MainTab = createBottomTabNavigator();
@@ -22,7 +23,7 @@ export const useRoute = (isAuth) => {
   const [auth, setAuth] = useState(isAuth);
   function handleOut() {
     setAuth((prev) => (prev = null));
-    console.log("func", auth);
+    // console.log("func", auth);
   }
   console.log("isAuth", auth);
   if (!Boolean(auth)) {
@@ -46,16 +47,17 @@ export const useRoute = (isAuth) => {
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {
-          paddingTop: 9,
+          paddingVertical: 9,
           borderBlockColor: "rgba(0, 0, 0, 0.3)",
           borderTopWidth: 0.5,
           backgroundColor: "#ffffff",
+          height: 57,
         },
       }}
     >
       <MainTab.Screen
         name="Публікації"
-        component={PostsScreen}
+        component={DefaultPostsScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <AntDesign name="appstore-o" size={size} color={color} />
