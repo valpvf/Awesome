@@ -138,7 +138,7 @@ export default function CreatePostsScreen({ navigation }) {
             <TextInput
               style={styles.input}
               placeholder="Місцевість..."
-              value={state.location.latitude}
+              value={state.location.latitude?.toString()}
               onChangeText={(value) =>
                 setState((prev) => ({
                   ...prev,

@@ -1,20 +1,15 @@
-import {
-  Header,
-  createStackNavigator,
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { getHeaderTitle } from "@react-navigation/elements";
 
 import RegistrationScreen from "./Screens/Auth/RegistrationScreen";
 import LoginScreen from "./Screens/Auth/LoginScreen";
-import PostsScreen from "./Screens/Main/PostsScreen";
 import ProfileScreen from "./Screens/Main/ProfileScreen";
 import CreatePostsScreen from "./Screens/Main/CreatePostsScreen";
 
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
-import { Button, Text } from "react-native";
 import { useState } from "react";
 import DefaultPostsScreen from "./Screens/NestedScreens/DefaultPostsScreen";
+import PostsScreen from "./Screens/Main/PostsScreen";
 
 const AuthStack = createStackNavigator();
 const MainTab = createBottomTabNavigator();
@@ -57,7 +52,7 @@ export const useRoute = (isAuth) => {
     >
       <MainTab.Screen
         name="Публікації"
-        component={DefaultPostsScreen}
+        component={PostsScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <AntDesign name="appstore-o" size={size} color={color} />
@@ -89,7 +84,7 @@ export const useRoute = (isAuth) => {
         }}
       />
       <MainTab.Screen
-        name="Профііль"
+        name="Профіль"
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (

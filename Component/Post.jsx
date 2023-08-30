@@ -8,13 +8,19 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import image from "./../assets/images/image.jpg";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Post({
   image,
   title,
   locationPhoto,
-  navigation,
+  location,
 }) {
+  const navigation = useNavigation();
+  // const navigateToMap = () => {
+  //   ;
+  // };
+
   return (
     <View style={styles.wrapper}>
       <Image
@@ -24,7 +30,10 @@ export default function Post({
       ></Image>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.inner}>
-        <View style={styles.subinner}>
+        <View
+          style={styles.subinner}
+          onPress={() => navigation.navigate("Коментарі")}
+        >
           <View style={styles.box}>
             <Feather
               name="message-circle"
@@ -42,11 +51,7 @@ export default function Post({
         <View style={[styles.box, { justifyContent: "flex-end" }]}>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() =>
-              navigation.navigate("Публікації", {
-                screen: "MapScreen",
-              })
-            }
+            onPress={() => navigation.navigate("Мапа", { location })}
             style={{
               flex: 1,
               flexDirection: "row",

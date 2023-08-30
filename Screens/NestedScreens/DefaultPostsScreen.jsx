@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import Post from "../../Component/Post";
 
-const DefaultPostsScreen = ({ route, navigation }) => {
+const DefaultPostsScreen = ({ route }) => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     if (route.params) setPosts((prev) => [...posts, route.params]);
@@ -24,7 +24,8 @@ const DefaultPostsScreen = ({ route, navigation }) => {
             image={item.photo}
             title={item.photoDescription}
             locationPhoto={item.location.latitude}
-            navigation={navigation}
+            location={item.location}
+            // onPress={() => navigation.navigate("Профіль")}
           />
         )}
       />
